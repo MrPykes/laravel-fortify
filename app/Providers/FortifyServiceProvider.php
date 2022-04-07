@@ -49,15 +49,15 @@ class FortifyServiceProvider extends ServiceProvider
         // });
 
         Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('email', $request->email)->where('password', $request->password)->first();
+            $user = User::where('email', $request->email)->first();
             // dd($user);
 
-            // if (
-            //     $user &&
-            //     Hash::check($request->password, $user->password)
-            // ) {
-            return $user;
-            // }
+            if (
+                $user &&
+                Hash::check($request->password, $user->password)
+            ) {
+                return $user;
+            }
         });
 
         Fortify::loginView(function () {

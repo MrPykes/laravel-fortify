@@ -50,7 +50,6 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
-            // dd($user);
 
             if (
                 $user &&
@@ -58,6 +57,10 @@ class FortifyServiceProvider extends ServiceProvider
             ) {
                 return $user;
             }
+        });
+
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset', ['request' => $request]);
         });
 
         Fortify::loginView(function () {
